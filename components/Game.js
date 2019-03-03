@@ -31,13 +31,21 @@ export default class Game extends React.Component {
     const board = this.state.board.slice();
     board.splice(i, 1, this.state.turn);
     const turn = this.state.turn === 'X' ? 'O' : 'X';
-    this.setState({ board, turn });    
+    this.setState({ board, turn });
   }
 
   getWinner () {
+    const results = solutions.map(
+      (solution) => solution.map((i) => this.state.board[i]).join('')
+    );
+    const row = results.find(
+      (result) => result === 'XXX' || result === 'OOO'
+    );
+    return row && row[0];
   }
 
   isComplete () {
+    return this.state.board.every((field) => field);
   }
 
   render () {
